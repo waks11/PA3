@@ -33,11 +33,37 @@ def compute_dp(a, b, values):
     return dp
 
 
+def reconstruct(dp, a, b, values):
+    i, j = len(a), len(b)
+    result = []
+
+    while i > 0 and j > 0:
+        if a[i - 1] == b[j - 1]:
+            result.append(a[i - 1])
+            i -= 1
+            j -= 1
+        elif dp[i - 1][j] >= dp[i][j - 1]:
+            i -= 1
+        else:
+            j -= 1
+
+    return ''.join(reversed(result))
+
+
 if __name__ == '__main__':
     if len(sys.argv) != 2:
         print(f"Usage: python {sys.argv[0]} <input_file>")
         sys.exit(1)
 
     values, a, b = parse_input(sys.argv[1])
+
+    start = time.time()
     dp = compute_dp(a, b, values)
-    print(dp[len(a)][len(b)])
+    elapsed = time.time() - start
+
+    max_value = dp[len(a)][len(b)]
+    subseq = reconstruct(dp, a, b, values)
+
+    print(max_value)
+    print(subseq)
+    print(f"Time: {elapsed:.6f}s", file=sys.stderr)
