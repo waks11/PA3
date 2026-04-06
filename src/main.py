@@ -9,13 +9,13 @@ def main():
     values, a, b = parse_input(fileInput)
 
     # Start time
-    start = time.time()
+    # start = time.time()
 
     # Run DP solution
     dp = compute_dp(a, b, values)
 
     # End time
-    elapsed = time.time() - start
+    # elapsed = time.time() - start
 
     # Compute & print results
     max_value = dp[len(a)][len(b)]
@@ -23,7 +23,7 @@ def main():
 
     print(max_value)
     print(subseq)
-    print(f"Time: {elapsed:.6f}s", file=sys.stderr)
+    # print(f"Time: {elapsed:.6f}s", file=sys.stderr)
 
 if __name__ == '__main__':
     main()
