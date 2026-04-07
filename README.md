@@ -70,12 +70,27 @@ dp[i][0] = 0 for all i
 * Recurrence:
   - we know that this is a binary choice DP, either there is a match or there is no match
   - the recurrence equation below is correct for the following reasons:
-    - when a[i] = b[j], a matching character can only increase or maintain our total value (it's non-negative), so it is always the right move. We take whatever the best solution was before both of these characters and add the value of the matched character.
+    - when a[i] == b[j], a matching character can only increase or maintain our total value (it's non-negative), so it is always the right move. We take whatever the best solution was before both of these characters and add the value of the matched character.
     - when a[i] != b[j], we cannot match both characters at this position, so we skip whichever one leads to the worse result and carry forward the better of the two options
 ```
-dp[i][j] = dp[i-1][j-1] + v(a[i])        if a[i] = b[j]
+dp[i][j] = dp[i-1][j-1] + v(a[i])        if a[i] == b[j]
 dp[i][j] = max(dp[i-1][j], dp[i][j-1])   if a[i] != b[j]
 ```
 
 ### Question 3: Big-Oh
-*TODO*
+* Runtime: O(m * n)
+```
+HVLCS(a, b, values):
+    m, n = length of a, length of b
+
+    create a table dp of size (m+1) * (n+1), all slots initialized to 0
+
+    for i from 1 to m:
+        for j from 1 to n:
+            if a[i] == b[j]:
+                dp[i][j] = dp[i-1][j-1] + v(a[i])
+            else:
+                dp[i][j] = max(dp[i-1][j], dp[i][j-1])
+
+    return dp[m][n]
+```
