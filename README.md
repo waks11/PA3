@@ -2,7 +2,7 @@
 
 ## Team
 - Alejandro Wakszol (UFID: 42739040)
-- [Partner Name] (UFID: [Partner UFID])
+- Kaden Luangsouphom (UFID: 89641011)
 
 ## Description
 Given two strings A and B over a fixed alphabet with character values, this program computes a common subsequence that maximizes the total value and outputs both the maximum value and the subsequence.
@@ -11,15 +11,15 @@ Given two strings A and B over a fixed alphabet with character values, this prog
 No compilation needed (Python 3).
 
 ```bash
-python src/hvlcs.py <input_file>
+python src/main.py < <input_file>
 ```
 
 ### Example
 ```bash
-python src/hvlcs.py data/example.in
+python src/main.py < data/example.in
 ```
 
-Expected output:
+Expected output (in terminal):
 ```
 9
 cb
@@ -56,10 +56,26 @@ B
 ## Questions
 
 ### Question 1: Empirical Comparison
-*TODO*
+![Runtime Graph](data/tests/runtime_graph.png)
 
 ### Question 2: Recurrence Equation
-*TODO*
+* Base Cases:
+  - when either string A or string B has a length of 0, you cannot match anything and therefore the value of the common subsequence is 0
+  - the base cases are handled automatically in our code when we initialize the entire DP table to 0
+```
+dp[0][j] = 0 for all j
+dp[i][0] = 0 for all i
+```
+
+* Recurrence:
+  - we know that this is a binary choice DP, either there is a match or there is no match
+  - the recurrence equation below is correct for the following reasons:
+    - when a[i] = b[j], a matching character can only increase or maintain our total value (it's non-negative), so it is always the right move. We take whatever the best solution was before both of these characters and add the value of the matched character.
+    - when a[i] != b[j], we cannot match both characters at this position, so we skip whichever one leads to the worse result and carry forward the better of the two options
+```
+dp[i][j] = dp[i-1][j-1] + v(a[i])        if a[i] = b[j]
+dp[i][j] = max(dp[i-1][j], dp[i][j-1])   if a[i] != b[j]
+```
 
 ### Question 3: Big-Oh
 *TODO*
